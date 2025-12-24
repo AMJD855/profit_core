@@ -1,55 +1,65 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
-# --- User Schemas ---
-class UserCreate(BaseModel):
+# --- User Schemas (Authentication) ---
+
+class UserBase(BaseModel):
     email: EmailStr
-    password: String
 
-class UserResponse(BaseModel):
+class UserCreate(UserBase):
+    password: str  # تم التصحيح من String إلى str
+
+class UserResponse(UserBase):
     id: int
-    email: EmailStr
+
     class Config:
-        from_attributes = True
+        from_attributes = True # لتمكين التحويل التلقائي من SQLAlchemy Models
 
 class Token(BaseModel):
     access_token: str
     token_type: str
 
-# --- Calculation Schemas ---
+class TokenData(BaseModel):
+    email: Optional[str] = None
+
+# --- Profit & Loss Calculator Schemas ---
+
 class ProfitLossRequest(BaseModel):
-    capital: float
-    entry_price: float
-    exit_price: float
-    quantity: float
-    fee: float = 0.0
+    capital: float = Field(..., gt=0, description="رأس المال الكلي")
+    entry_price: float = Field(..., gt=0)
+    exit_price: float = Field(..., gt=0)
+    quantity: float = Field(..., gt=0)
+    fee: float = Field(default=0.0, ge=0)
 
 class ProfitLossResponse(BaseModel):
     profit_or_loss: float
     percentage: float
     roi: float
-    status: str
+    status: str # profit | loss | breakeven
 
-# --- Trade Schemas ---
+# --- Trade Tracker Schemas ---
+
 class TradeCreate(BaseModel):
     entry_price: float
     exit_price: float
     quantity: float
-    profit_or_loss: float # يمكن حسابها أوتوماتيكياً أيضاً
+    profit_or_loss: float
 
 class TradeResponse(TradeCreate):
     id: int
-    created_at: datetime
     user_id: int
+    created_at: datetime
+
     class Config:
         from_attributes = True
 
-# --- Analytics Schemas ---
+# --- Performance Analytics Schemas ---
+
 class AnalyticsSummary(BaseModel):
     total_trades: int
     win_rate: float
     average_profit: float
-    max_drawdown: float # Max loss
+    max_drawdown: float
     smart_recommendation: str
 
