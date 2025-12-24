@@ -1,10 +1,21 @@
-fastapi
-uvicorn[standard]
-sqlalchemy
-psycopg2-binary
-pydantic[email]
-python-jose[cryptography]
-passlib[bcrypt]
-python-multipart
-python-dotenv
+# Web Framework
+fastapi==0.115.0
+uvicorn[standard]==0.31.0
+
+# Database (ORM & Drivers)
+SQLAlchemy==2.0.35
+# SQLite مدمجة في بايثون لذا لا تحتاج لتعريف خارجي هنا
+
+# Authentication & Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.12
+
+# Validation & Environment
+pydantic[email]==2.9.2
+python-dotenv==1.0.1
+
+# Performance (Optional but recommended for production)
+uvloop==0.21.0; sys_platform != 'win32'
+watchfiles==0.24.0
 
