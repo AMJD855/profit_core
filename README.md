@@ -1,21 +1,54 @@
-# 🚀 ProfitCore API
+# 📈 ProfitCore API - Financial Trade Tracker
 
-Professional Backend API for financial tracking and profit/loss analytics.
+**ProfitCore** هو تطبيق (Backend) متطور مبني باستخدام **FastAPI**، مصمم لمساعدة المتداولين على حساب أرباحهم وخسائرهم وتتبع صفقاتهم المالية بدقة واحترافية.
 
-## Tech Stack
-- **FastAPI** (Python 3.12+)
-- **PostgreSQL** (Database)
-- **SQLAlchemy** (ORM)
-- **JWT** (Authentication)
+## 🚀 الميزات الرئيسية
+* **نظام توثيق محكم**: استخدام **JWT (JSON Web Tokens)** لتأمين بيانات المستخدمين.
+* **حاسبة مالية**: حساب الربح والخسارة (P&L)، العائد على الاستثمار (ROI)، والنسب المئوية.
+* **سجل الصفقات**: إضافة وعرض الصفقات التاريخية لكل مستخدم بشكل منفصل.
+* **قاعدة بيانات SQLite**: خفيفة وسريعة ومثالية للنشر السريع.
+* **توثيق تلقائي**: دعم كامل لـ Swagger UI و ReDoc.
 
-## Features
-- ✅ User Authentication (Signup/Login)
-- ✅ Profit & Loss Calculator
-- ✅ Trade Tracker (History)
-- ✅ Performance Analytics Summary
+## 🛠 التقنيات المستخدمة
+* **FastAPI**: إطار عمل بايثون فائق السرعة.
+* **SQLAlchemy**: محرك ORM للتعامل مع قاعدة البيانات.
+* **Pydantic v2**: للتحقق من صحة البيانات (Data Validation).
+* **SQLite**: قاعدة بيانات محلية.
+* **Passlib & Jose**: لتشفير كلمات المرور وإدارة التوكنات.
 
-## How to run locally
-1. Clone the repo: `git clone ...`
-2. Install deps: `pip install -r requirements.txt`
-3. Run: `uvicorn app.main:app --reload`
+## 💻 التشغيل المحلي (Local Setup)
 
+1. **تحميل المشروع**:
+   ```bash
+   git clone [https://github.com/your-username/profit-core.git](https://github.com/your-username/profit-core.git)
+   cd profit_core
+
+ * إنشاء البيئة الافتراضية:
+   python -m venv venv
+source venv/bin/activate  # لنظام Linux/Mac
+# أو
+venv\Scripts\activate  # لنظام Windows
+
+ * تثبيت المكتبات:
+   pip install -r requirements.txt
+
+ * إعداد المتغيرات البيئية:
+   قم بإنشاء ملف .env وأضف:
+   DATABASE_URL=sqlite:///./profitcore.db
+SECRET_KEY=your_secret_key_here
+ALGORITHM=HS256
+
+ * تشغيل السيرفر:
+   uvicorn app.main:app --reload
+
+🔌 روابط الوصول (Endpoints)
+ * التوثيق (Swagger UI): http://127.0.0.1:8000/docs
+ * فحص الحالة: http://127.0.0.1:8000/ping
+📝 أمثلة للاختبار (cURL)
+تسجيل الدخول:
+curl -X 'POST' '[http://127.0.0.1:8000/auth/login](http://127.0.0.1:8000/auth/login)' \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+-d 'username=user@example.com&password=yourpassword'
+
+🛡️ الترخيص
+​هذا المشروع مفتوح المصدر وتحت رخصة MIT.
